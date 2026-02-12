@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infographic: Election Rally & SET Index Analysis (18 PMs)</title>
+    <title>Infographic: Election Rally & SET Index Analysis (Compact for SharePoint)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -29,24 +29,23 @@
             scroll-behavior: smooth;
         }
 
-        .content-container { width: 100%; }
+        .content-container { width: 100%; max-width: 1100px; margin: 0 auto; }
 
         section {
-            min-height: 100vh;
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 5rem 2rem;
+            padding: 3rem 1.5rem; /* ลด Padding ลงเพื่อให้กระชับขึ้น */
             border-bottom: 1px solid var(--line);
         }
 
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 950px;
-            height: 480px;
+            max-width: 900px;
+            height: 400px; /* ปรับความสูงกราฟให้สมดุล */
             margin: auto;
         }
 
@@ -57,27 +56,27 @@
             background-image: linear-gradient(to right, var(--blue), var(--purple));
         }
 
-        /* Fixed Navigation Dots */
+        /* Fixed Navigation Dots - ปรับให้เล็กลงเล็กน้อย */
         .dots-nav {
             position: fixed;
-            right: 25px;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
             z-index: 100;
             background: rgba(255, 255, 255, 0.9);
-            padding: 15px 10px;
-            border-radius: 30px;
+            padding: 10px 8px;
+            border-radius: 20px;
             backdrop-filter: blur(10px);
             border: 1px solid var(--line);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
         .dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             background: #cbd5e1;
             cursor: pointer;
@@ -87,20 +86,20 @@
 
         .dot.active {
             background: var(--blue);
-            transform: scale(1.6);
+            transform: scale(1.5);
         }
 
         .dot::after {
             content: attr(data-label);
             position: absolute;
-            right: 35px;
+            right: 25px;
             top: 50%;
             transform: translateY(-50%);
             background: var(--ink);
             color: white;
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 10px;
             white-space: nowrap;
             opacity: 0;
             pointer-events: none;
@@ -112,259 +111,234 @@
         .card {
             background: white;
             border: 1px solid var(--line);
-            border-radius: 2.5rem;
-            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);
+            border-radius: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            width: 100%;
         }
 
         .btn-pdf {
             background-color: var(--ink);
             color: white;
-            padding: 0.85rem 1.75rem;
+            padding: 0.65rem 1.5rem;
             border-radius: 9999px;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
-            gap: 0.6rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 0.5rem;
+            transition: all 0.3s;
             text-decoration: none;
+            font-size: 0.9rem;
         }
 
         .btn-pdf:hover {
             background-color: var(--blue);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 100, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 100, 255, 0.15);
         }
     </style>
-    <!-- Chosen Palette: BBLAM Financial Blue -->
+    <!-- Chosen Palette: BBLAM Blue & Neutrals -->
     <!-- Application Structure Plan: 
-         1. Hero Section (Scrollable + PDF Button with SharePoint Link)
-         2. Election Rally Analysis (+1.6% / +1.2% averages)
-         3. Annualized Returns (Bar Chart of key successions)
-         4. Tenure Paradox (Scatter Plot: FULL 18 POINTS from Excel)
-         5. Feb 2026 Snapshot (Contextual UI)
-         6. Conclusion & PDF Link at footer
+         1. Hero Section (Compact)
+         2. Election Rally (Key Average Stats)
+         3. Annual Returns (Succession comparisons)
+         4. Tenure Paradox (Full 18 points scatter plot)
+         5. Feb 2026 Snapshot (Dashboard)
+         6. Strategic Conclusion (With PDF link)
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 </head>
 <body class="antialiased">
 
-    <!-- Dots Navigation -->
+    <!-- Dots Navigation (6 Dots) -->
     <nav class="dots-nav" id="dotsNav">
         <div class="dot active" data-slide="0" data-label="หน้าแรก"></div>
-        <div class="dot" data-slide="1" data-label="Election Rally"></div>
-        <div class="dot" data-slide="2" data-label="ผลตอบแทนรายปี"></div>
-        <div class="dot" data-slide="3" data-label="กับดักเวลา (18 จุด)"></div>
-        <div class="dot" data-slide="4" data-label="สถานการณ์ 2569"></div>
-        <div class="dot" data-slide="5" data-label="บทสรุป"></div>
+        <div class="dot" data-slide="1" data-label="Rally Stats"></div>
+        <div class="dot" data-slide="2" data-label="Returns"></div>
+        <div class="dot" data-slide="3" data-label="18 PM Points"></div>
+        <div class="dot" data-slide="4" data-label="Feb 2026"></div>
+        <div class="dot" data-slide="5" data-label="Summary"></div>
     </nav>
 
     <div class="content-container">
 
         <!-- SECTION 0: Hero -->
-        <section id="slide-0" class="bg-slate-50 relative overflow-hidden">
-            <div class="max-w-4xl text-center space-y-8 relative z-10">
-                <div class="inline-block px-4 py-1 bg-white border border-[#0064FF]/20 text-[#0064FF] rounded-full text-[12px] font-bold tracking-[0.2em] uppercase shadow-sm">
-                    Evidence-Based Analysis: 1992 - 2026
+        <section id="slide-0" class="bg-white">
+            <div class="text-center space-y-6">
+                <div class="inline-block px-3 py-1 bg-blue-50 border border-blue-100 text-blue-600 rounded-full text-[10px] font-bold tracking-widest uppercase">
+                    Economic Strategy Research: 1992 - 2026
                 </div>
-                <h1 class="text-5xl md:text-7xl font-bold leading-tight">
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight text-slate-900">
                     ถอดรหัส <span class="text-gradient">การเลือกตั้งไทย</span> <br>และกลไก <span class="text-slate-700">SET Index</span>
                 </h1>
-                <p class="text-xl text-slate-500 max-w-2xl mx-auto font-light leading-relaxed">
-                    วิเคราะห์พฤติกรรมตลาดหุ้นไทยผ่านข้อมูลสถิติ 18 รัฐบาล เพื่อหาจุดสมดุลระหว่างพลวัตทางการเมืองและเสถียรภาพของตลาดทุน
+                <p class="text-base text-slate-500 max-w-xl mx-auto font-light">
+                    วิเคราะห์พฤติกรรมตลาดหุ้นไทยผ่าน 18 เหตุการณ์สำคัญ เพื่อหาจุดสมดุลระหว่างพลวัตการเมืองและพอร์ตการลงทุน
                 </p>
-                
-                <div class="pt-4">
+                <div class="pt-2">
                     <a href="https://bblasset.sharepoint.com/:b:/s/EconUpdate_Research/IQA8a-5OoazrQ6guBwfic-RyAaq3HnSs-BCEqxVxq7rxuwk?e=lbAJAn" target="_blank" class="btn-pdf">
-                        <span class="text-lg">📄</span>
-                        ดูรายงานฉบับเต็ม (PDF)
+                        <span>📄</span> ดูรายงานฉบับเต็ม (PDF)
                     </a>
-                </div>
-
-                <div class="pt-10 text-slate-300">
-                    <p class="text-[10px] font-bold tracking-widest uppercase mb-4 text-slate-400">เลื่อนลงเพื่อสำรวจข้อมูล</p>
-                    <div class="w-px h-16 bg-gradient-to-b from-blue-500 to-transparent mx-auto"></div>
                 </div>
             </div>
         </section>
 
         <!-- SECTION 1: Election Rally -->
         <section id="slide-1">
-            <div class="max-w-6xl w-full space-y-12 text-center">
-                <div class="space-y-4">
-                    <h2 class="text-4xl font-bold text-slate-900">1. ปรากฏการณ์ Election Rally</h2>
-                    <p class="text-slate-500 text-lg font-light italic">สถิติผลตอบแทนเฉลี่ย 1 เดือนก่อนและหลังเลือกตั้ง (เฉพาะกลุ่ม Elected)</p>
+            <div class="w-full space-y-8 text-center">
+                <div class="space-y-2">
+                    <h2 class="text-2xl font-bold text-slate-900">1. ปรากฏการณ์ Election Rally</h2>
+                    <p class="text-slate-500 text-sm font-light italic">ค่าเฉลี่ยสถิติ 1 เดือนก่อนและหลังเลือกตั้ง (กลุ่ม Elected)</p>
                 </div>
 
-                <div class="card p-10">
-                    <div class="chart-container" style="height: 380px;">
+                <div class="card p-6 md:p-8">
+                    <div class="chart-container" style="height: 320px;">
                         <canvas id="chartRally"></canvas>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="p-8 bg-blue-50 rounded-[2rem] border border-blue-100 transition hover:shadow-lg">
-                        <p class="text-[11px] uppercase font-bold text-blue-500 mb-2 tracking-widest">Avg. Before Election</p>
-                        <p class="text-5xl font-bold text-[#0064FF]">+1.6%</p>
-                        <p class="text-xs text-blue-400 mt-2">6 ใน 9 ครั้งให้ผลตอบแทนเป็นบวก</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+                    <div class="p-5 bg-blue-50 rounded-2xl border border-blue-100">
+                        <p class="text-[10px] uppercase font-bold text-blue-500 mb-1">Avg. Before Election</p>
+                        <p class="text-3xl font-bold text-blue-600">+1.6%</p>
                     </div>
-                    <div class="p-8 bg-slate-50 rounded-[2rem] border border-slate-100 transition hover:shadow-lg">
-                        <p class="text-[11px] uppercase font-bold text-slate-400 mb-2 tracking-widest">Avg. After Election</p>
-                        <p class="text-5xl font-bold text-slate-800">+1.2%</p>
-                        <p class="text-xs text-slate-400 mt-2">5 ใน 9 ครั้งให้ผลตอบแทนเป็นบวก</p>
+                    <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100">
+                        <p class="text-[10px] uppercase font-bold text-slate-400 mb-1">Avg. After Election</p>
+                        <p class="text-3xl font-bold text-slate-800">+1.2%</p>
                     </div>
-                    <div class="p-8 bg-emerald-50 rounded-[2rem] border border-emerald-100 transition hover:shadow-lg">
-                        <p class="text-[11px] uppercase font-bold text-emerald-600 mb-2 tracking-widest">Feb 2026 Snapshot</p>
-                        <p class="text-5xl font-bold text-emerald-600">+8.0%</p>
-                        <p class="text-xs text-emerald-500 mt-2">แรงตอบรับสูงสุดเป็นประวัติการณ์</p>
+                    <div class="p-5 bg-emerald-50 rounded-2xl border border-emerald-100">
+                        <p class="text-[10px] uppercase font-bold text-emerald-600 mb-1">Current Rally 2569</p>
+                        <p class="text-3xl font-bold text-emerald-600">+8.0%</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 2: Annualized Return Comparison -->
-        <section id="slide-2" class="bg-slate-50">
-            <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                <div class="lg:col-span-4 space-y-8">
-                    <div class="space-y-4">
-                        <h2 class="text-4xl font-bold text-slate-900 leading-tight">2. ผลตอบแทนรายปี <br>ตามกรณีศึกษาสำคัญ</h2>
-                        <p class="text-slate-500 leading-relaxed font-light">
-                            ความผันผวนสุดขั้วมักเกิดในกลุ่มรัฐบาลแต่งตั้ง (Appointed) 
-                            ที่มีทั้งความเชื่อมั่นสูงสุด (+122.6%) และสภาวะสุญญากาศทางการเมืองต่ำสุด (-88.2%)
-                        </p>
-                    </div>
-                    <div class="flex flex-col gap-4">
-                        <div class="flex items-center text-sm font-bold text-slate-600">
-                            <span class="w-4 h-4 bg-[#0064FF] rounded-full mr-3"></span> รัฐบาลเลือกตั้ง
+        <!-- SECTION 2: Annualized Return -->
+        <section id="slide-2">
+            <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-5 space-y-6">
+                    <h2 class="text-2xl font-bold text-slate-900">2. ผลตอบแทนรายปี <br>จำแนกตามรูปแบบรัฐบาล</h2>
+                    <p class="text-slate-500 text-sm leading-relaxed font-light">
+                        ความผันผวนสูงสุดเกิดในกลุ่มรัฐบาลแต่งตั้ง (Appointed) ที่มีทั้งผลตอบแทนสูงสุดประวัติศาสตร์ (+122.6%) และช่วงวิกฤตที่รุนแรง (-88.2%)
+                    </p>
+                    <div class="flex gap-4">
+                        <div class="flex items-center text-[10px] font-bold text-slate-500 uppercase">
+                            <span class="w-2.5 h-2.5 bg-[#0064FF] rounded-full mr-2"></span> Elected
                         </div>
-                        <div class="flex items-center text-sm font-bold text-slate-600">
-                            <span class="w-4 h-4 bg-[#9E50CC] rounded-full mr-3"></span> รัฐบาลแต่งตั้ง/อื่นๆ
+                        <div class="flex items-center text-[10px] font-bold text-slate-500 uppercase">
+                            <span class="w-2.5 h-2.5 bg-[#9E50CC] rounded-full mr-2"></span> Appointed
                         </div>
                     </div>
                 </div>
-                <div class="lg:col-span-8 card p-8">
-                    <div class="chart-container" style="height: 420px;">
+                <div class="lg:col-span-7 card p-6">
+                    <div class="chart-container" style="height: 350px;">
                         <canvas id="chartRegime"></canvas>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 3: Tenure Paradox (FULL 18 POINTS DATA) -->
+        <!-- SECTION 3: Tenure Paradox (18 POINTS) -->
         <section id="slide-3">
-            <div class="max-w-6xl w-full space-y-12">
-                <div class="text-center space-y-4">
-                    <h2 class="text-4xl font-bold text-slate-900">3. กับดักระยะเวลา (Tenure Paradox)</h2>
-                    <p class="text-slate-500 text-lg font-light italic">สถิติ 18 ชุดข้อมูล: จำนวนวันที่อยู่ในตำแหน่งเทียบกับผลตอบแทนตลาดหุ้น</p>
+            <div class="w-full space-y-8">
+                <div class="text-center space-y-2">
+                    <h2 class="text-2xl font-bold text-slate-900">3. กับดักระยะเวลา (Tenure Paradox)</h2>
+                    <p class="text-slate-500 text-sm font-light">ความสัมพันธ์ 18 นายกรัฐมนตรี: วันที่ดำรงตำแหน่ง vs ผลตอบแทน</p>
                 </div>
 
-                <div class="card p-10 bg-white">
-                    <div class="chart-container" style="height: 520px;">
+                <div class="card p-6 bg-white">
+                    <div class="chart-container" style="height: 480px;">
                         <canvas id="chartTenure"></canvas>
                     </div>
-                    <div class="mt-8 flex flex-wrap justify-center gap-6">
-                        <div class="px-5 py-2.5 bg-blue-50 text-blue-700 rounded-full text-sm font-semibold border border-blue-100 shadow-sm">
-                            🔵 เลือกตั้ง (Elected) - 9 ท่าน
+                    <div class="mt-4 flex justify-center gap-4 text-[10px] font-bold uppercase text-slate-400">
+                        <span>● Elected (9 Points)</span>
+                        <span>● Appointed (9 Points)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: Feb 2026 Snapshot -->
+        <section id="slide-4">
+            <div class="w-full bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white relative overflow-hidden shadow-xl">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 blur-[80px] rounded-full -mr-32 -mt-32"></div>
+                <div class="relative z-10 space-y-10 text-center">
+                    <div class="space-y-2">
+                        <h2 class="text-3xl font-bold">กรณีศึกษา: กุมภาพันธ์ 2569</h2>
+                        <p class="text-blue-400 text-sm italic font-light">ตลาดหุ้นไทยพุ่งแรงขานรับความชัดเจนของเสถียรภาพใหม่</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="bg-white/5 border border-white/10 p-8 rounded-3xl">
+                            <p class="text-[10px] uppercase text-blue-400 font-bold tracking-widest mb-2">Pre-Election Rally</p>
+                            <p class="text-6xl font-bold">+8.0%</p>
+                            <p class="text-[11px] text-slate-400 mt-4 leading-relaxed font-light">สถิติสูงสุดใหม่ในรอบ 30 ปี</p>
                         </div>
-                        <div class="px-5 py-2.5 bg-purple-50 text-purple-700 rounded-full text-sm font-semibold border border-purple-100 shadow-sm">
-                            🟣 แต่งตั้ง (Appointed) - 9 ท่าน
+                        <div class="text-left space-y-4">
+                            <h4 class="font-bold text-blue-400 border-b border-white/10 pb-2 text-sm uppercase">Market Insights:</h4>
+                            <ul class="space-y-3 text-xs text-slate-300 font-light">
+                                <li class="flex items-start">
+                                    <span class="mr-2">✔️</span> ต่างชาติซื้อสุทธิ 1.6 หมื่นล้านบาทในวันเดียว
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="mr-2">✔️</span> ดัชนีทะลุ 1,400 จุดทันทีหลังทราบผลนับคะแนนเบื้องต้น
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="mr-2">✔️</span> หุ้นกลุ่มรับเหมา (STEC) พุ่งแรงขานรับนโยบายต่อเนื่อง
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 4: 2026 Snapshot -->
-        <section id="slide-4" class="bg-slate-900 text-white relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/15 blur-[150px] rounded-full -mr-64 -mt-64"></div>
-            <div class="max-w-5xl w-full text-center space-y-12 relative z-10">
-                <div class="space-y-4">
-                    <h2 class="text-5xl font-bold tracking-tight">Focus: กุมภาพันธ์ 2569</h2>
-                    <p class="text-blue-400 text-xl font-light italic">ตลาดหุ้นไทยทะยานขานรับเสถียรภาพและนโยบายใหม่</p>
+        <!-- SECTION 5: Summary Strategy -->
+        <section id="slide-5" class="border-none">
+            <div class="w-full space-y-10 text-center">
+                <div class="space-y-2">
+                    <h2 class="text-2xl font-bold text-slate-900">Strategic Conclusion</h2>
+                    <p class="text-slate-400 text-sm font-light italic">"Legitimacy & Clarity" คือพรีเมียมของตลาดหุ้นไทย</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div class="bg-white/5 backdrop-blur-2xl border border-white/10 p-12 rounded-[3.5rem] flex flex-col justify-center">
-                        <p class="text-[12px] uppercase text-blue-400 font-bold tracking-widest mb-4">Pre-Election Return (Actual)</p>
-                        <p class="text-8xl font-bold text-white">+8.0%</p>
-                        <p class="text-xs text-slate-400 mt-8 leading-relaxed font-light">พุ่งสูงสุดนับตั้งแต่การเลือกตั้งปี 2535 <br>สะท้อนความเชื่อมั่นต่อความชัดเจนของอำนาจใหม่</p>
-                    </div>
-                    <div class="bg-white p-12 rounded-[3.5rem] text-left space-y-8 shadow-2xl">
-                        <h4 class="text-xl font-bold text-slate-900 border-b border-slate-100 pb-4">สรุปความเชื่อมั่นล่าสุด:</h4>
-                        <ul class="space-y-6 text-slate-600 text-sm">
-                            <li class="flex items-start">
-                                <div class="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center mr-4 mt-1 flex-shrink-0">
-                                    <span class="text-white text-[10px]">✓</span>
-                                </div>
-                                <span><strong>Foreign Direct Inflow:</strong> ต่างชาติเข้าซื้อสุทธิ 1.6 หมื่นล้านบาทในวันเดียว หลังทราบผลนับคะแนนเบื้องต้น</span>
-                            </li>
-                            <li class="flex items-start">
-                                <div class="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center mr-4 mt-1 flex-shrink-0">
-                                    <span class="text-white text-[10px]">✓</span>
-                                </div>
-                                <span><strong>SET Performance:</strong> ทะลุระดับ 1,400 จุดทันที ขานรับความต่อเนื่องของนโยบายเศรษฐกิจของพรรคแกนนำ</span>
-                            </li>
-                            <li class="flex items-start">
-                                <div class="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center mr-4 mt-1 flex-shrink-0">
-                                    <span class="text-white text-[10px]">✓</span>
-                                </div>
-                                <span><strong>Sectorial Surge:</strong> หุ้นกลุ่มรับเหมา (STEC) นำตลาดด้วยการดีดตัวขึ้นแรงกว่า 18.8%</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION 5: Strategy Conclusion -->
-        <section id="slide-5">
-            <div class="max-w-4xl w-full space-y-16 text-center">
-                <div class="space-y-4">
-                    <h2 class="text-4xl font-bold text-slate-900">Strategic Conclusion</h2>
-                    <p class="text-slate-400 text-lg font-light italic">"Legitimacy & Clarity" คือหัวใจสำคัญของการฟื้นตัวของตลาดหุ้นไทย</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-                    <div class="p-10 card bg-slate-50 border-none group transition hover:bg-white hover:shadow-2xl">
-                        <h4 class="text-xl font-bold text-slate-900 mb-4">Clarity Over Regime</h4>
-                        <p class="text-slate-500 leading-relaxed font-light text-sm">
-                            ตลาดขานรับ "ความชัดเจน" ของผลลัพธ์มากกว่าระบอบ หากรัฐบาลมีความชอบธรรมและทีมเศรษฐกิจที่แข็งแกร่ง (อานันท์, อภิสิทธิ์) ตลาดจะให้พรีเมียมบวกเสมอ
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                    <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100">
+                        <h4 class="text-base font-bold text-slate-900 mb-3">Clarity Over Regime</h4>
+                        <p class="text-slate-500 leading-relaxed text-xs font-light">
+                            ตลาดขานรับความชัดเจนของผลลัพธ์มากกว่ารูปแบบอำนาจ หากรัฐบาลมีความชอบธรรมและทีมเศรษฐกิจเด่นชัด ตลาดจะให้มูลค่าเพิ่มเสมอ
                         </p>
                     </div>
-                    <div class="p-10 card bg-slate-50 border-none group transition hover:bg-white hover:shadow-2xl">
-                        <h4 class="text-xl font-bold text-slate-900 mb-4">Quality of Tenure</h4>
-                        <p class="text-slate-500 leading-relaxed font-light text-sm">
-                            อยู่นานไม่ได้แปลว่าดีเสมอไป หากขาดการปฏิรูปโครงสร้างเศรษฐกิจ (ประยุทธ์ 3,284 วัน / +1.3\%) ตลาดให้ความสำคัญกับคุณภาพของนโยบายมากกว่าระยะเวลาที่ดำรงตำแหน่ง
+                    <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100">
+                        <h4 class="text-base font-bold text-slate-900 mb-3">The New Benchmark</h4>
+                        <p class="text-slate-500 leading-relaxed text-xs font-light">
+                            ปี 2569 กำลังพิสูจน์ว่าเสถียรภาพทางการเมืองที่มาพร้อมความต่อเนื่องของนโยบาย จะช่วยพา SET หลุดพ้นจากสภาวะซบเซาในรอบ 10 ปีได้หรือไม่
                         </p>
                     </div>
                 </div>
 
-                <div class="p-12 bg-blue-600 rounded-[3.5rem] text-white shadow-2xl shadow-blue-200">
-                    <p class="text-3xl font-bold italic leading-tight">"ให้น้ำหนักทีมเศรษฐกิจร้อยละ 50 ของการตัดสินใจ <br>และใช้โอกาสจากปรากฏการณ์ Election Rally"</p>
+                <div class="p-10 bg-blue-600 rounded-[2.5rem] text-white shadow-lg">
+                    <p class="text-xl font-bold italic leading-tight">"ให้น้ำหนักทีมเศรษฐกิจและนโยบายเหนือกว่าที่มาของอำนาจ"</p>
                 </div>
 
-                <div class="pt-8">
+                <div class="pt-4">
                     <a href="https://bblasset.sharepoint.com/:b:/s/EconUpdate_Research/IQA8a-5OoazrQ6guBwfic-RyAaq3HnSs-BCEqxVxq7rxuwk?e=lbAJAn" target="_blank" class="btn-pdf">
-                        <span class="text-lg">📄</span>
-                        ดาวน์โหลดรายงานวิเคราะห์ฉบับสมบูรณ์ (PDF)
+                        <span>📄</span> ดาวน์โหลดรายงานฉบับสมบูรณ์ (PDF)
                     </a>
                 </div>
 
-                <footer class="pt-10 border-t border-slate-100">
-                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-[0.4em]">BBLAM Financial Research & Economic Strategy | Data 1992-2026</p>
+                <footer class="pt-6 border-t border-slate-100">
+                    <p class="text-[9px] text-slate-400 font-bold uppercase tracking-[0.3em]">BBLAM Analysis | Data Sources: SET, PIER, Bloomberg 1992-2026</p>
                 </footer>
             </div>
         </section>
 
     </div>
 
+    <!-- Chart Config & Scripts -->
     <script>
         const COLORS = {
             blue:   '#0064FF',
             red:    '#EF3C67',
             green:  '#61D09C',
             purple: '#9E50CC',
-            pink:   '#F47C99',
-            orange: '#FF6600',
             grid:   '#f1f5f9'
         };
 
@@ -375,42 +349,25 @@
             setupIntersectionObserver();
         };
 
-        // 1. Rally Bar Chart (+1.6% / +1.2%)
         function initRallyChart() {
             const ctx = document.getElementById('chartRally').getContext('2d');
             new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['ปี 2535', 'ปี 2544', 'ปี 2554', 'ปี 2562', 'ปี 2566', 'ปี 2569 (Actual)'],
+                    labels: ['ปี 2535', 'ปี 2544', 'ปี 2554', 'ปี 2562', 'ปี 2566', 'ปี 2569'],
                     datasets: [
-                        {
-                            label: '1 เดือนก่อนเลือกตั้ง (%)',
-                            data: [6.3, 5.2, -1.5, -0.8, -1.2, 8.0],
-                            backgroundColor: COLORS.blue,
-                            borderRadius: 8
-                        },
-                        {
-                            label: '1 เดือนหลังเลือกตั้ง (%)',
-                            data: [8.3, 14.8, 9.4, 1.5, 0.1, 4.5],
-                            backgroundColor: COLORS.purple,
-                            borderRadius: 8
-                        }
+                        { label: '1 เดือนก่อนเลือกตั้ง (%)', data: [6.3, 5.2, -1.5, -0.8, -1.2, 8.0], backgroundColor: COLORS.blue, borderRadius: 6 },
+                        { label: '1 เดือนหลังเลือกตั้ง (%)', data: [8.3, 14.8, 9.4, 1.5, 0.1, 4.5], backgroundColor: COLORS.purple, borderRadius: 6 }
                     ]
                 },
                 options: {
                     maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom', labels: { font: { family: 'Prompt', size: 12 } } }
-                    },
-                    scales: {
-                        y: { grid: { color: COLORS.grid }, ticks: { font: { family: 'Prompt' } } },
-                        x: { grid: { display: false }, ticks: { font: { family: 'Prompt' } } }
-                    }
+                    plugins: { legend: { position: 'bottom', labels: { font: { family: 'Prompt', size: 11 } } } },
+                    scales: { y: { grid: { color: COLORS.grid }, ticks: { font: { family: 'Prompt' } } } }
                 }
             });
         }
 
-        // 2. Regime Performance Comparison (Top Successions)
         function initRegimeChart() {
             const ctx = document.getElementById('chartRegime').getContext('2d');
             const data = [
@@ -418,118 +375,62 @@
                 { l: 'อภิสิทธิ์ (+42.1%)', v: 42.1, t: 'appt' },
                 { l: 'ทักษิณ 1 (+21.1%)', v: 21.1, t: 'elec' },
                 { l: 'ชวน 1 (+20.5%)', v: 20.5, t: 'elec' },
-                { l: 'ประยุทธ์ 1 (+1.3%)', v: 1.3, t: 'appt' },
-                { l: 'ประยุทธ์ 2 (+1.0%)', v: 1.0, t: 'elec' },
+                { l: 'ประยุทธ์ (+1.3%)', v: 1.3, t: 'appt' },
                 { l: 'ชวลิต (-50.7%)', v: -50.7, t: 'elec' },
                 { l: 'สมชาย (-88.2%)', v: -88.2, t: 'appt' }
             ];
-
             new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: data.map(d => d.l),
-                    datasets: [{
-                        label: 'Annualized Return (%)',
-                        data: data.map(d => d.v),
-                        backgroundColor: data.map(d => d.t === 'elec' ? COLORS.blue : COLORS.purple),
-                        borderRadius: 8
-                    }]
+                    datasets: [{ label: 'Return (%)', data: data.map(d => d.v), backgroundColor: data.map(d => d.t === 'elec' ? COLORS.blue : COLORS.purple), borderRadius: 6 }]
                 },
                 options: {
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
-                    scales: {
-                        y: { grid: { color: COLORS.grid } },
-                        x: { grid: { display: false } }
-                    }
+                    scales: { y: { grid: { color: COLORS.grid } } }
                 }
             });
         }
 
-        // 3. Tenure Paradox - FULL 18 POINTS from Excel
         function initTenureChart() {
             const ctx = document.getElementById('chartTenure').getContext('2d');
-            
-            // ELECTED Points (9 Points)
             const elected = [
-                { x: 1024, y: 20.5, name: 'ชวน 1' },
-                { x: 1492, y: 21.1, name: 'ทักษิณ 1' },
-                { x: 557, y: -0.8, name: 'ทักษิณ 2' },
-                { x: 1006, y: 9.5, name: 'ยิ่งลักษณ์' },
-                { x: 349, y: -50.7, name: 'ชวลิต' },
-                { x: 501, y: -25.7, name: 'บรรหาร' },
-                { x: 1535, y: 1.0, name: 'ประยุทธ์ 2' },
-                { x: 358, y: -13.9, name: 'เศรษฐา' },
+                { x: 1024, y: 20.5, name: 'ชวน 1' }, { x: 1492, y: 21.1, name: 'ทักษิณ 1' },
+                { x: 557, y: -0.8, name: 'ทักษิณ 2' }, { x: 1006, y: 9.5, name: 'ยิ่งลักษณ์' },
+                { x: 349, y: -50.7, name: 'ชวลิต' }, { x: 501, y: -25.7, name: 'บรรหาร' },
+                { x: 1535, y: 1.0, name: 'ประยุทธ์ 2' }, { x: 358, y: -13.9, name: 'เศรษฐา' },
                 { x: 224, y: -18.9, name: 'สมัคร' }
             ];
-
-            // APPOINTED/OTHER Points (9 Points)
             const appointed = [
-                { x: 104, y: 122.6, name: 'อานันท์' },
-                { x: 157, y: 8.0, name: 'อนุทิน (2569 Rally)' },
-                { x: 75, y: -88.2, name: 'สมชาย' },
-                { x: 319, y: -12.9, name: 'แพทองธาร' },
-                { x: 1187, y: -11.8, name: 'ชวน 2' },
-                { x: 960, y: 42.1, name: 'อภิสิทธิ์' },
-                { x: 48, y: -68.1, name: 'สุจินดา' },
-                { x: 484, y: 6.3, name: 'สุรยุทธ์' },
+                { x: 104, y: 122.6, name: 'อานันท์' }, { x: 157, y: 8.0, name: 'อนุทิน (2569)' },
+                { x: 75, y: -88.2, name: 'สมชาย' }, { x: 319, y: -12.9, name: 'แพทองธาร' },
+                { x: 1187, y: -11.8, name: 'ชวน 2' }, { x: 960, y: 42.1, name: 'อภิสิทธิ์' },
+                { x: 48, y: -68.1, name: 'สุจินดา' }, { x: 484, y: 6.3, name: 'สุรยุทธ์' },
                 { x: 1749, y: 1.3, name: 'ประยุทธ์ 1' }
             ];
-
             new Chart(ctx, {
                 type: 'scatter',
                 data: {
                     datasets: [
-                        {
-                            label: 'เลือกตั้ง (Elected) - 9 ท่าน',
-                            data: elected,
-                            backgroundColor: COLORS.blue,
-                            pointRadius: 11,
-                            pointHoverRadius: 16,
-                            borderColor: '#fff',
-                            borderWidth: 2
-                        },
-                        {
-                            label: 'แต่งตั้ง (Appointed) - 9 ท่าน',
-                            data: appointed,
-                            backgroundColor: COLORS.purple,
-                            pointRadius: 11,
-                            pointHoverRadius: 16,
-                            borderColor: '#fff',
-                            borderWidth: 2
-                        }
+                        { label: 'Elected', data: elected, backgroundColor: COLORS.blue, pointRadius: 9, pointHoverRadius: 14 },
+                        { label: 'Appointed', data: appointed, backgroundColor: COLORS.purple, pointRadius: 9, pointHoverRadius: 14 }
                     ]
                 },
                 options: {
                     maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'top', labels: { font: { family: 'Prompt', size: 12 } } },
-                        tooltip: {
-                            callbacks: {
-                                label: (ctx) => `${ctx.raw.name}: วาระ ${ctx.raw.x} วัน, Return ${ctx.raw.y}%`
-                            }
-                        }
-                    },
+                    plugins: { tooltip: { callbacks: { label: (ctx) => `${ctx.raw.name}: ${ctx.raw.x} วัน, ${ctx.raw.y}%` } } },
                     scales: {
-                        x: { 
-                            title: { display: true, text: 'จำนวนวันที่อยู่ในตำแหน่ง (Days)', font: { family: 'Prompt', weight: 'bold' } },
-                            grid: { color: COLORS.grid }
-                        },
-                        y: { 
-                            title: { display: true, text: 'Annualized Return (%)', font: { family: 'Prompt', weight: 'bold' } },
-                            grid: { color: COLORS.grid }
-                        }
+                        x: { title: { display: true, text: 'Days in Office' }, grid: { color: COLORS.grid } },
+                        y: { title: { display: true, text: 'Return (%)' }, grid: { color: COLORS.grid } }
                     }
                 }
             });
         }
 
-        // Dot Navigation Setup
         function setupIntersectionObserver() {
             const dots = document.querySelectorAll('.dot');
             const sections = document.querySelectorAll('section');
-
-            const options = { threshold: 0.4 };
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -540,10 +441,8 @@
                         });
                     }
                 });
-            }, options);
-
+            }, { threshold: 0.3 });
             sections.forEach(section => observer.observe(section));
-
             dots.forEach(dot => {
                 dot.addEventListener('click', () => {
                     const targetId = `slide-${dot.getAttribute('data-slide')}`;

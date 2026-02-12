@@ -1,477 +1,556 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Data Analytics: ความสัมพันธ์ระหว่างการเมืองไทยและ SET Index</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet" />
-
-  <style>
-    body {
-      font-family: "Prompt", sans-serif;
-      background-color: #F3F4F6;
-      color: #1F2937;
-    }
-
-    .chart-container {
-      position: relative;
-      width: 100%;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-      height: 400px;
-      max-height: 500px;
-    }
-    @media (max-width: 640px) {
-      .chart-container { height: 300px; }
-    }
-
-    /* Gradient Text */
-    .text-gradient {
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-image: linear-gradient(to right, #006064, #00ACC1);
-    }
-
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #f1f1f1; }
-    ::-webkit-scrollbar-thumb { background: #00ACC1; border-radius: 4px; }
-
-    /* ✅ Smooth scroll + กัน header/sticky bar บังหัวข้อ */
-    html { scroll-behavior: smooth; }
-    section { scroll-margin-top: 140px; } /* ปรับ 120–160 ได้ */
-
-    /* (คงไว้ แม้ตอนนี้ไม่ใช้ iframe) */
-    .pdf-embed {
-      position: relative;
-      width: 100%;
-      padding-top: 130%;
-      overflow: hidden;
-      border-radius: 16px;
-    }
-    .pdf-embed iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-  </style>
-</head>
-
-<body class="bg-slate-50">
-
-  <!-- Header -->
-  <header class="bg-white shadow-lg sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-      <h1 class="text-xl font-bold text-cyan-800">SET Index Analytics</h1>
-      <nav class="hidden md:flex space-x-4 text-sm font-semibold text-slate-600">
-        <a href="#regime" class="hover:text-cyan-600 transition">รูปแบบระบอบ</a>
-        <a href="#rally" class="hover:text-cyan-600 transition">Election Rally</a>
-        <a href="#tenure" class="hover:text-cyan-600 transition">เสถียรภาพ</a>
-        <a href="#conclusion" class="hover:text-cyan-600 transition">บทสรุป</a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- ✅ PDF Button Bar อยู่บนสุดก่อน Content (Sticky ใต้ Header) -->
-  <section class="bg-white/90 backdrop-blur border-b border-slate-200 sticky top-[72px] z-40">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-      <a
-        class="inline-flex justify-center items-center px-4 py-2 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition"
-        href="https://bblasset.sharepoint.com/:b:/s/EconUpdate_Research/IQA7i8v-JKNwQZH1dfpzye5-ATKUPoCcJVDgCYseSyzCntg?e=lkb1yX"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        เปิด PDF ในแท็บใหม่
-      </a>
-    </div>
-  </section>
-
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
-
-    <!-- Intro -->
-    <section class="text-center space-y-4">
-      <h2 class="text-4xl md:text-5xl font-bold text-slate-800 leading-tight">
-        ความสัมพันธ์ระหว่าง <span class="text-gradient">การเมืองไทย</span>
-        <br class="hidden md:block" />
-        และผลตอบแทน <span class="text-cyan-600">SET Index</span>
-      </h2>
-      <p class="text-lg text-slate-600 max-w-3xl mx-auto">
-        การวิเคราะห์เชิงลึกจากข้อมูลสถิติย้อนหลัง 30 ปี (พ.ศ. 2535 - 2569) เพื่อไขคำตอบว่า "การเลือกตั้ง" "รัฐบาลแต่งตั้ง" และ "เสถียรภาพ" ส่งผลต่อพอร์ตการลงทุนอย่างไร
-      </p>
-    </section>
-
-    <!-- Section 1 -->
-    <section id="regime" class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-white rounded-2xl shadow-sm p-8 border border-slate-100">
-      <div class="md:col-span-5 space-y-4">
-        <div class="inline-block px-3 py-1 bg-cyan-100 text-cyan-800 rounded-full text-xs font-bold tracking-wide">DATA ANALYSIS</div>
-        <h3 class="text-2xl font-bold text-slate-800">1. รูปแบบการเข้าสู่อำนาจ (Regime Type)</h3>
-        <p class="text-slate-600 leading-relaxed">
-          จากการวิเคราะห์ข้อมูลพบว่า <strong>รัฐบาลจากการแต่งตั้ง (Appointed)</strong> มีความผันผวนของผลตอบแทนสูงที่สุด (Extreme Variance)
-          โดยมีทั้งจุดสูงสุดในประวัติศาสตร์ (อานันท์ +122.6%) และจุดต่ำสุด (สมชาย -88.2%) ขึ้นอยู่กับบริบทความขัดแย้งในช่วงเวลานั้น
-        </p>
-        <p class="text-slate-600 leading-relaxed">
-          ในขณะที่ <strong>รัฐบาลเลือกตั้ง (Elected)</strong> ผลตอบแทนจะผูกโยงกับนโยบายเศรษฐกิจเป็นหลัก รัฐบาลที่มีนโยบายโดดเด่นมักสร้างผลตอบแทนเป็นบวกได้อย่างสม่ำเสมอ
-        </p>
-        <ul class="space-y-2 mt-4">
-          <li class="flex items-center text-sm text-slate-700">
-            <span class="w-3 h-3 bg-cyan-500 rounded-full mr-2"></span> สูงสุด: อานันท์ ปันยารชุน (+122.6%)
-          </li>
-          <li class="flex items-center text-sm text-slate-700">
-            <span class="w-3 h-3 bg-orange-500 rounded-full mr-2"></span> ต่ำสุด: สมชาย วงศ์สวัสดิ์ (-88.2%)
-          </li>
-        </ul>
-      </div>
-      <div class="md:col-span-7">
-        <div class="chart-container">
-          <canvas id="chartRegime"></canvas>
-        </div>
-        <p class="text-center text-xs text-slate-400 mt-2">Annualized Return by Prime Minister (Highlighting Extremes)</p>
-      </div>
-    </section>
-
-    <!-- Section 2 -->
-    <section id="rally" class="bg-white rounded-2xl shadow-sm p-8 border border-slate-100">
-      <div class="text-center mb-8 max-w-3xl mx-auto">
-        <h3 class="text-2xl font-bold text-slate-800">2. ปรากฏการณ์ "Election Rally"</h3>
-        <p class="text-slate-600 mt-2">
-          สถิติ 1 เดือนก่อนและหลังเลือกตั้งชี้ให้เห็นว่า "ความคาดหวัง" ขับเคลื่อนตลาดในระยะสั้น แต่ "ความชัดเจน" คือตัวตัดสินในระยะยาว
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        <div class="chart-container h-80">
-          <canvas id="chartRally"></canvas>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="bg-cyan-50 p-6 rounded-xl border-l-4 border-cyan-500">
-            <h4 class="text-cyan-800 font-bold mb-1">Pre-Election</h4>
-            <p class="text-3xl font-bold text-slate-800">60%</p>
-            <p class="text-sm text-slate-600 mt-1">โอกาสที่ตลาดจะ <span class="text-green-600 font-bold">บวก</span> ใน 1 เดือนก่อนเลือกตั้ง</p>
-          </div>
-
-          <div class="bg-orange-50 p-6 rounded-xl border-l-4 border-orange-500">
-            <h4 class="text-orange-800 font-bold mb-1">ความเสี่ยง</h4>
-            <p class="text-3xl font-bold text-slate-800">Sell on Fact</p>
-            <p class="text-sm text-slate-600 mt-1">มักเกิดขึ้นหากผลการเลือกตั้ง <span class="text-orange-600 font-bold">ไม่ชัดเจน</span> หรือเกิดสุญญากาศ</p>
-          </div>
-
-          <div class="col-span-1 sm:col-span-2 bg-slate-50 p-6 rounded-xl">
-            <h4 class="text-slate-700 font-bold mb-2">Key Takeaway</h4>
-            <p class="text-slate-600 text-sm">
-              ปี 2001 และ 2011 ตลาดพุ่งขึ้นแรง (+14.8%, +9.4%) หลังเลือกตั้งเพราะพรรคแกนนำชนะขาดลอย สร้างความเชื่อมั่นเรื่องเสถียรภาพ
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 3 -->
-    <section id="tenure" class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-      <div class="md:col-span-8 bg-white rounded-2xl shadow-sm p-8 border border-slate-100">
-        <div class="chart-container">
-          <canvas id="chartTenure"></canvas>
-        </div>
-      </div>
-
-      <div class="md:col-span-4 space-y-6">
-        <div>
-          <h3 class="text-2xl font-bold text-slate-800">3. กับดักเสถียรภาพ (Tenure Paradox)</h3>
-          <p class="text-slate-600 mt-4 leading-relaxed">
-            ข้อมูลบ่งชี้ว่า "ความยาวนาน" ของวาระ ไม่ได้รับประกันผลตอบแทนที่ดีเสมอไป
-          </p>
-        </div>
-
-        <div class="space-y-4">
-          <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-            <h5 class="font-bold text-slate-700">อยู่ยาวแต่โตต่ำ</h5>
-            <p class="text-sm text-slate-500 mt-1">
-              พล.อ.ประยุทธ์ (3,284 วัน) อยู่ในตำแหน่งนานที่สุด แต่ผลตอบแทนเฉลี่ยเพียง +1.3% ต่อปี สะท้อนภาวะตลาดซึมตัว
-            </p>
-          </div>
-          <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-            <h5 class="font-bold text-slate-700">สั้นและผันผวน</h5>
-            <p class="text-sm text-slate-500 mt-1">
-              การเปลี่ยนผ่านระยะสั้น (เศรษฐา/แพทองธาร) ส่งผลลบ (-12% ถึง -13%) เนื่องจากตลาดขาดความเชื่อมั่นในความต่อเนื่อง
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 4 -->
-    <section class="bg-gradient-to-br from-cyan-900 to-slate-900 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
-      <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-cyan-500 rounded-full opacity-10 blur-3xl"></div>
-
-      <div class="relative z-10">
-        <div class="mb-8 border-b border-cyan-700 pb-4">
-          <h3 class="text-2xl md:text-3xl font-bold text-white">4. กรณีศึกษา: การเปลี่ยนผ่านสู่ปี 2569</h3>
-          <p class="text-cyan-200 mt-2">ตลาดตอบรับเชิงบวกสูงสุดในรอบหลายปีจาก "ความชัดเจน"</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-          <div class="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20 hover:bg-white/20 transition duration-300">
-            <p class="text-cyan-300 text-sm font-semibold uppercase tracking-wider mb-2">SET Index</p>
-            <p class="text-4xl font-bold text-white">1,400+</p>
-            <p class="text-xs text-cyan-200 mt-2">ทะลุแนวต้านทันทีที่ทราบผล</p>
-          </div>
-          <div class="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20 hover:bg-white/20 transition duration-300">
-            <p class="text-cyan-300 text-sm font-semibold uppercase tracking-wider mb-2">Foreign Net Buy</p>
-            <p class="text-4xl font-bold text-white">+16,000</p>
-            <p class="text-xs text-cyan-200 mt-2">ล้านบาท (ในวันเดียว)</p>
-          </div>
-          <div class="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20 hover:bg-white/20 transition duration-300">
-            <p class="text-cyan-300 text-sm font-semibold uppercase tracking-wider mb-2">Top Sector</p>
-            <p class="text-4xl font-bold text-white text-green-400">+18.8%</p>
-            <p class="text-xs text-cyan-200 mt-2">กลุ่มรับเหมา (STEC) นำตลาด</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Conclusion -->
-    <section id="conclusion" class="bg-white rounded-2xl shadow-md p-8 border-t-4 border-cyan-600">
-      <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
-        <span class="bg-cyan-600 text-white rounded-lg p-2 mr-3 text-lg">สรุป</span>
-        บทสรุปเชิงกลยุทธ์ (Strategic Takeaway)
-      </h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div>
-          <h4 class="font-bold text-lg text-slate-700 mb-2">สูตรความสำเร็จของตลาดหุ้นไทย</h4>
-          <p class="text-slate-600 mb-4">"Legitimacy &amp; Clarity &gt; Regime Type"</p>
-          <p class="text-slate-600 text-sm leading-relaxed">
-            ตลาดหุ้นไม่ได้เกลียดรัฐบาลแต่งตั้ง หรือรักรัฐบาลเลือกตั้งเพียงอย่างเดียว แต่ตลาดให้มูลค่ากับ
-            <strong>"เสถียรภาพที่มาพร้อมความสามารถ"</strong> (Technocratic Competence) และ
-            <strong>"ความต่อเนื่องของนโยบาย"</strong> มากที่สุด
-          </p>
-        </div>
-        <div>
-          <h4 class="font-bold text-lg text-slate-700 mb-2">คำแนะนำนักลงทุน</h4>
-          <ul class="space-y-3">
-            <li class="flex items-start">
-              <span class="text-cyan-500 mr-2">✓</span>
-              <p class="text-sm text-slate-600">โฟกัสที่ <strong>ทีมเศรษฐกิจ</strong> มากกว่าที่มาของอำนาจ</p>
-            </li>
-            <li class="flex items-start">
-              <span class="text-cyan-500 mr-2">✓</span>
-              <p class="text-sm text-slate-600">ใช้จังหวะ <strong>Pre-Election (1 เดือน)</strong> ในการเก็งกำไรระยะสั้น</p>
-            </li>
-            <li class="flex items-start">
-              <span class="text-cyan-500 mr-2">✓</span>
-              <p class="text-sm text-slate-600">ระวังภาวะ <strong>Sell on Fact</strong> หากการจัดตั้งรัฐบาลมีความล่าช้า</p>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- References -->
-    <section class="border-t border-slate-200 pt-10 pb-20">
-      <h3 class="text-xl font-bold text-slate-800 mb-6">เอกสารอ้างอิงและงานวิจัยที่เกี่ยวข้อง (Academic &amp; Research References)</h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-slate-600">
-        <div>
-          <h4 class="font-bold text-cyan-800 mb-3 border-b border-cyan-100 pb-2">สถาบันวิจัยและมหาวิทยาลัย</h4>
-          <ul class="space-y-3 list-disc list-inside">
-            <li><strong>สถาบันวิจัยเศรษฐกิจป๋วย อึ๊งภากรณ์ (PIER):</strong> "ดัชนีความไม่แน่นอนทางการเมืองของประเทศไทย" และ "ผลกระทบทางเศรษฐกิจของความไม่แน่นอนทางการเมืองในประเทศไทย" โดย พงศ์ศักดิ์ เหลืองอร่าม และยุทธนา เศรษฐปราโมทย์ (2561, 2563)</li>
-            <li><strong>Southeast Asian Journal of Economics:</strong> "Political Uncertainty and the Thai Stock Market" โดย สุธาวัลย์ พฤกษ์อำไพ และคณะ (2565)</li>
-            <li><strong>คณะพาณิชยศาสตร์และการบัญชี จุฬาลงกรณ์มหาวิทยาลัย:</strong> "National Elections and Volatility of Stock Returns: Case Study of Thailand" โดย ศิรวิทย์ ตริยศักดิ์ (2566)</li>
-            <li><strong>คณะพาณิชยศาสตร์และการบัญชี มหาวิทยาลัยธรรมศาสตร์:</strong> งานวิจัยด้านการตอบสนองของตลาดต่อเหตุการณ์การเมือง (พิชามญธุ์ วิริยางกูร, 2561) และเสถียรภาพกำไรบริษัทจดทะเบียน (พรรณนิภา โฆษรนุสสรณ์, 2567)</li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-bold text-cyan-800 mb-3 border-b border-cyan-100 pb-2">บทวิเคราะห์ภาคการเงิน (Market Analysis)</h4>
-          <ul class="space-y-3 list-disc list-inside">
-            <li><strong>CGS International:</strong> วิเคราะห์ปัจจัยหนุน (Re-rating Catalyst) จากความชัดเจนทางการเมือง (เกษม พันธ์รัตนมาลา)</li>
-            <li><strong>DBS Group Research:</strong> ประเมินความเสี่ยงทางกฎหมาย (Legal Deadlock) และงบประมาณ (Chua Han Teng)</li>
-            <li><strong>บล.บัวหลวง:</strong> ผลสำรวจน้ำหนักการเมืองต่อตลาดและการวิเคราะห์กลุ่มนักลงทุน Gen Z/Y</li>
-            <li><strong>Maybank Securities:</strong> การปรับเป้าหมายดัชนีตามเสถียรภาพรัฐบาลผสม (ชาคริต เรืองศิลปินญา)</li>
-            <li><strong>บล.เอเซีย พลัส &amp; บล.หยวนต้า:</strong> วิเคราะห์ Fund Flow และเสถียรภาพรัฐบาลใหม่</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="bg-slate-900 text-slate-400 py-8 text-center text-sm">
-    <p>&copy; 2026 Data Analytics Report. Generated based on provided datasets.</p>
-  </footer>
-
-  <script>
-    // --- 1. Label Processing Utility ---
-    function processLabel(label) {
-      const MAX_LENGTH = 16;
-      if (label.length <= MAX_LENGTH) return label;
-
-      const words = label.split(" ");
-      const lines = [];
-      let currentLine = words[0];
-
-      for (let i = 1; i < words.length; i++) {
-        if (currentLine.length + 1 + words[i].length <= MAX_LENGTH) {
-          currentLine += " " + words[i];
-        } else {
-          lines.push(currentLine);
-          currentLine = words[i];
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: Election Rally & SET Index Analysis (18 PMs)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue:   #0064FF;
+            --red:    #EF3C67;
+            --green:  #61D09C;
+            --purple: #9E50CC;
+            --pink:   #F47C99;
+            --orange: #FF6600;
+            --bg: #ffffff;
+            --ink: #0f172a;
+            --muted: #64748b;
+            --line: #f1f5f9;
         }
-      }
-      lines.push(currentLine);
-      return lines;
-    }
 
-    // --- 2. Tooltip Configuration ---
-    const commonTooltipConfig = {
-      callbacks: {
-        title: function (tooltipItems) {
-          const item = tooltipItems[0];
-          let label = item.chart.data.labels[item.dataIndex];
-          if (Array.isArray(label)) return label.join(" ");
-          return label;
-        },
-      },
-    };
+        body {
+            font-family: 'Prompt', sans-serif;
+            margin: 0;
+            background-color: var(--bg);
+            color: var(--ink);
+            scroll-behavior: smooth;
+        }
 
-    // Chart 1
-    const ctxRegime = document.getElementById("chartRegime").getContext("2d");
-    const regimeLabels = [
-      "อานันท์ (Appointed)",
-      "อภิสิทธิ์ (Appointed)",
-      "ทักษิณ 1 (Elected)",
-      "ชวน 1 (Elected)",
-      "ประยุทธ์ (Overall)",
-      "เศรษฐา (Elected)",
-      "ชวลิต (Elected)",
-      "สุจินดา (Appointed)",
-      "สมชาย (Appointed)",
-    ];
-    const processedRegimeLabels = regimeLabels.map(processLabel);
+        .content-container { width: 100%; }
 
-    new Chart(ctxRegime, {
-      type: "bar",
-      data: {
-        labels: processedRegimeLabels,
-        datasets: [
-          {
-            label: "Annualized Return (%)",
-            data: [122.6, 42.1, 21.1, 20.5, 1.3, -12.5, -50.7, -68.1, -88.2],
-            backgroundColor: [
-              "#00ACC1",
-              "#00ACC1",
-              "#26C6DA",
-              "#26C6DA",
-              "#B0BEC5",
-              "#FF7043",
-              "#FF7043",
-              "#D84315",
-              "#D84315",
-            ],
-            borderColor: "rgba(0,0,0,0.1)",
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        indexAxis: "y",
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: commonTooltipConfig,
-          title: {
-            display: true,
-            text: "ผลตอบแทนรายปีเฉลี่ยแยกรายนายกรัฐมนตรี (Annualized Return)",
-            font: { size: 16, family: "Prompt" },
-          },
-        },
-        scales: {
-          x: { grid: { color: "#f3f4f6" } },
-          y: { grid: { display: false } },
-        },
-      },
-    });
+        section {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 5rem 2rem;
+            border-bottom: 1px solid var(--line);
+        }
 
-    // Chart 2
-    const ctxRally = document.getElementById("chartRally").getContext("2d");
-    const rallyLabels = ["2001 (ทักษิณ)", "2011 (ยิ่งลักษณ์)", "2019 (ประยุทธ์)", "2026 (ปัจจุบัน)", "1996 (บรรหาร/ชวลิต)"];
-    const processedRallyLabels = rallyLabels.map(processLabel);
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 950px;
+            height: 480px;
+            margin: auto;
+        }
 
-    new Chart(ctxRally, {
-      type: "bar",
-      data: {
-        labels: processedRallyLabels,
-        datasets: [
-          { label: "1 Month Before", data: [2.5, -1.5, 1.2, 8.0, -3.2], backgroundColor: "#4DD0E1" },
-          { label: "1 Month After", data: [14.8, 9.4, 2.1, 5.5, -13.3], backgroundColor: "#006064" },
-        ],
-      },
-      options: {
-        maintainAspectRatio: false,
-        plugins: {
-          tooltip: commonTooltipConfig,
-          title: { display: true, text: "Election Rally: ก่อน vs หลังเลือกตั้ง 1 เดือน", font: { size: 16, family: "Prompt" } },
-        },
-        scales: {
-          y: { grid: { color: "#f3f4f6" }, title: { display: true, text: "% Return" } },
-        },
-      },
-    });
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, var(--blue), var(--purple));
+        }
 
-    // Chart 3
-    const ctxTenure = document.getElementById("chartTenure").getContext("2d");
+        /* Fixed Navigation Dots */
+        .dots-nav {
+            position: fixed;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px 10px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--line);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
 
-    new Chart(ctxTenure, {
-      type: "scatter",
-      data: {
-        datasets: [
-          {
-            label: "Tenure vs Return",
-            data: [
-              { x: 3284, y: 1.3, label: "ประยุทธ์" },
-              { x: 1460, y: 21.1, label: "ทักษิณ 1" },
-              { x: 1024, y: 20.5, label: "ชวน 1" },
-              { x: 960, y: 42.1, label: "อภิสิทธิ์" },
-              { x: 104, y: 122.6, label: "อานันท์" },
-              { x: 75, y: -88.2, label: "สมชาย" },
-              { x: 360, y: -12.5, label: "เศรษฐา/แพทองธาร" },
-              { x: 48, y: -68.1, label: "สุจินดา" },
-            ],
-            backgroundColor: function (context) {
-              const val = context.raw?.y;
-              return val >= 0 ? "#00ACC1" : "#FF7043";
-            },
-            pointRadius: 8,
-            pointHoverRadius: 10,
-          },
-        ],
-      },
-      options: {
-        maintainAspectRatio: false,
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: function (context) {
-                const raw = context.raw;
-                return `${raw.label}: ${raw.x} days, ${raw.y}% return`;
-              },
-            },
-          },
-          title: {
-            display: true,
-            text: "ความสัมพันธ์: ระยะเวลาครองอำนาจ vs ผลตอบแทน",
-            font: { size: 16, family: "Prompt" },
-          },
-        },
-        scales: {
-          x: { title: { display: true, text: "จำนวนวันที่อยู่ในตำแหน่ง (Days in Office)" }, grid: { color: "#f3f4f6" } },
-          y: { title: { display: true, text: "Annualized Return (%)" }, grid: { color: "#f3f4f6" } },
-        },
-      },
-    });
-  </script>
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .dot.active {
+            background: var(--blue);
+            transform: scale(1.6);
+        }
+
+        .dot::after {
+            content: attr(data-label);
+            position: absolute;
+            right: 35px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--ink);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .dot:hover::after { opacity: 1; }
+
+        .card {
+            background: white;
+            border: 1px solid var(--line);
+            border-radius: 2.5rem;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);
+        }
+
+        .btn-pdf {
+            background-color: var(--ink);
+            color: white;
+            padding: 0.85rem 1.75rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+        }
+
+        .btn-pdf:hover {
+            background-color: var(--blue);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 100, 255, 0.2);
+        }
+    </style>
+    <!-- Chosen Palette: BBLAM Financial Blue -->
+    <!-- Application Structure Plan: 
+         1. Hero Section (Scrollable + PDF Button with SharePoint Link)
+         2. Election Rally Analysis (+1.6% / +1.2% averages)
+         3. Annualized Returns (Bar Chart of key successions)
+         4. Tenure Paradox (Scatter Plot: FULL 18 POINTS from Excel)
+         5. Feb 2026 Snapshot (Contextual UI)
+         6. Conclusion & PDF Link at footer
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="antialiased">
+
+    <!-- Dots Navigation -->
+    <nav class="dots-nav" id="dotsNav">
+        <div class="dot active" data-slide="0" data-label="หน้าแรก"></div>
+        <div class="dot" data-slide="1" data-label="Election Rally"></div>
+        <div class="dot" data-slide="2" data-label="ผลตอบแทนรายปี"></div>
+        <div class="dot" data-slide="3" data-label="กับดักเวลา (18 จุด)"></div>
+        <div class="dot" data-slide="4" data-label="สถานการณ์ 2569"></div>
+        <div class="dot" data-slide="5" data-label="บทสรุป"></div>
+    </nav>
+
+    <div class="content-container">
+
+        <!-- SECTION 0: Hero -->
+        <section id="slide-0" class="bg-slate-50 relative overflow-hidden">
+            <div class="max-w-4xl text-center space-y-8 relative z-10">
+                <div class="inline-block px-4 py-1 bg-white border border-[#0064FF]/20 text-[#0064FF] rounded-full text-[12px] font-bold tracking-[0.2em] uppercase shadow-sm">
+                    Evidence-Based Analysis: 1992 - 2026
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold leading-tight">
+                    ถอดรหัส <span class="text-gradient">การเลือกตั้งไทย</span> <br>และกลไก <span class="text-slate-700">SET Index</span>
+                </h1>
+                <p class="text-xl text-slate-500 max-w-2xl mx-auto font-light leading-relaxed">
+                    วิเคราะห์พฤติกรรมตลาดหุ้นไทยผ่านข้อมูลสถิติ 18 รัฐบาล เพื่อหาจุดสมดุลระหว่างพลวัตทางการเมืองและเสถียรภาพของตลาดทุน
+                </p>
+                
+                <div class="pt-4">
+                    <a href="https://bblasset.sharepoint.com/:b:/s/EconUpdate_Research/IQA8a-5OoazrQ6guBwfic-RyAaq3HnSs-BCEqxVxq7rxuwk?e=lbAJAn" target="_blank" class="btn-pdf">
+                        <span class="text-lg">📄</span>
+                        ดูรายงานฉบับเต็ม (PDF)
+                    </a>
+                </div>
+
+                <div class="pt-10 text-slate-300">
+                    <p class="text-[10px] font-bold tracking-widest uppercase mb-4 text-slate-400">เลื่อนลงเพื่อสำรวจข้อมูล</p>
+                    <div class="w-px h-16 bg-gradient-to-b from-blue-500 to-transparent mx-auto"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 1: Election Rally -->
+        <section id="slide-1">
+            <div class="max-w-6xl w-full space-y-12 text-center">
+                <div class="space-y-4">
+                    <h2 class="text-4xl font-bold text-slate-900">1. ปรากฏการณ์ Election Rally</h2>
+                    <p class="text-slate-500 text-lg font-light italic">สถิติผลตอบแทนเฉลี่ย 1 เดือนก่อนและหลังเลือกตั้ง (เฉพาะกลุ่ม Elected)</p>
+                </div>
+
+                <div class="card p-10">
+                    <div class="chart-container" style="height: 380px;">
+                        <canvas id="chartRally"></canvas>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="p-8 bg-blue-50 rounded-[2rem] border border-blue-100 transition hover:shadow-lg">
+                        <p class="text-[11px] uppercase font-bold text-blue-500 mb-2 tracking-widest">Avg. Before Election</p>
+                        <p class="text-5xl font-bold text-[#0064FF]">+1.6%</p>
+                        <p class="text-xs text-blue-400 mt-2">6 ใน 9 ครั้งให้ผลตอบแทนเป็นบวก</p>
+                    </div>
+                    <div class="p-8 bg-slate-50 rounded-[2rem] border border-slate-100 transition hover:shadow-lg">
+                        <p class="text-[11px] uppercase font-bold text-slate-400 mb-2 tracking-widest">Avg. After Election</p>
+                        <p class="text-5xl font-bold text-slate-800">+1.2%</p>
+                        <p class="text-xs text-slate-400 mt-2">5 ใน 9 ครั้งให้ผลตอบแทนเป็นบวก</p>
+                    </div>
+                    <div class="p-8 bg-emerald-50 rounded-[2rem] border border-emerald-100 transition hover:shadow-lg">
+                        <p class="text-[11px] uppercase font-bold text-emerald-600 mb-2 tracking-widest">Feb 2026 Snapshot</p>
+                        <p class="text-5xl font-bold text-emerald-600">+8.0%</p>
+                        <p class="text-xs text-emerald-500 mt-2">แรงตอบรับสูงสุดเป็นประวัติการณ์</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Annualized Return Comparison -->
+        <section id="slide-2" class="bg-slate-50">
+            <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-4 space-y-8">
+                    <div class="space-y-4">
+                        <h2 class="text-4xl font-bold text-slate-900 leading-tight">2. ผลตอบแทนรายปี <br>ตามกรณีศึกษาสำคัญ</h2>
+                        <p class="text-slate-500 leading-relaxed font-light">
+                            ความผันผวนสุดขั้วมักเกิดในกลุ่มรัฐบาลแต่งตั้ง (Appointed) 
+                            ที่มีทั้งความเชื่อมั่นสูงสุด (+122.6%) และสภาวะสุญญากาศทางการเมืองต่ำสุด (-88.2%)
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-4">
+                        <div class="flex items-center text-sm font-bold text-slate-600">
+                            <span class="w-4 h-4 bg-[#0064FF] rounded-full mr-3"></span> รัฐบาลเลือกตั้ง
+                        </div>
+                        <div class="flex items-center text-sm font-bold text-slate-600">
+                            <span class="w-4 h-4 bg-[#9E50CC] rounded-full mr-3"></span> รัฐบาลแต่งตั้ง/อื่นๆ
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-8 card p-8">
+                    <div class="chart-container" style="height: 420px;">
+                        <canvas id="chartRegime"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Tenure Paradox (FULL 18 POINTS DATA) -->
+        <section id="slide-3">
+            <div class="max-w-6xl w-full space-y-12">
+                <div class="text-center space-y-4">
+                    <h2 class="text-4xl font-bold text-slate-900">3. กับดักระยะเวลา (Tenure Paradox)</h2>
+                    <p class="text-slate-500 text-lg font-light italic">สถิติ 18 ชุดข้อมูล: จำนวนวันที่อยู่ในตำแหน่งเทียบกับผลตอบแทนตลาดหุ้น</p>
+                </div>
+
+                <div class="card p-10 bg-white">
+                    <div class="chart-container" style="height: 520px;">
+                        <canvas id="chartTenure"></canvas>
+                    </div>
+                    <div class="mt-8 flex flex-wrap justify-center gap-6">
+                        <div class="px-5 py-2.5 bg-blue-50 text-blue-700 rounded-full text-sm font-semibold border border-blue-100 shadow-sm">
+                            🔵 เลือกตั้ง (Elected) - 9 ท่าน
+                        </div>
+                        <div class="px-5 py-2.5 bg-purple-50 text-purple-700 rounded-full text-sm font-semibold border border-purple-100 shadow-sm">
+                            🟣 แต่งตั้ง (Appointed) - 9 ท่าน
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: 2026 Snapshot -->
+        <section id="slide-4" class="bg-slate-900 text-white relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/15 blur-[150px] rounded-full -mr-64 -mt-64"></div>
+            <div class="max-w-5xl w-full text-center space-y-12 relative z-10">
+                <div class="space-y-4">
+                    <h2 class="text-5xl font-bold tracking-tight">Focus: กุมภาพันธ์ 2569</h2>
+                    <p class="text-blue-400 text-xl font-light italic">ตลาดหุ้นไทยทะยานขานรับเสถียรภาพและนโยบายใหม่</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div class="bg-white/5 backdrop-blur-2xl border border-white/10 p-12 rounded-[3.5rem] flex flex-col justify-center">
+                        <p class="text-[12px] uppercase text-blue-400 font-bold tracking-widest mb-4">Pre-Election Return (Actual)</p>
+                        <p class="text-8xl font-bold text-white">+8.0%</p>
+                        <p class="text-xs text-slate-400 mt-8 leading-relaxed font-light">พุ่งสูงสุดนับตั้งแต่การเลือกตั้งปี 2535 <br>สะท้อนความเชื่อมั่นต่อความชัดเจนของอำนาจใหม่</p>
+                    </div>
+                    <div class="bg-white p-12 rounded-[3.5rem] text-left space-y-8 shadow-2xl">
+                        <h4 class="text-xl font-bold text-slate-900 border-b border-slate-100 pb-4">สรุปความเชื่อมั่นล่าสุด:</h4>
+                        <ul class="space-y-6 text-slate-600 text-sm">
+                            <li class="flex items-start">
+                                <div class="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center mr-4 mt-1 flex-shrink-0">
+                                    <span class="text-white text-[10px]">✓</span>
+                                </div>
+                                <span><strong>Foreign Direct Inflow:</strong> ต่างชาติเข้าซื้อสุทธิ 1.6 หมื่นล้านบาทในวันเดียว หลังทราบผลนับคะแนนเบื้องต้น</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center mr-4 mt-1 flex-shrink-0">
+                                    <span class="text-white text-[10px]">✓</span>
+                                </div>
+                                <span><strong>SET Performance:</strong> ทะลุระดับ 1,400 จุดทันที ขานรับความต่อเนื่องของนโยบายเศรษฐกิจของพรรคแกนนำ</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center mr-4 mt-1 flex-shrink-0">
+                                    <span class="text-white text-[10px]">✓</span>
+                                </div>
+                                <span><strong>Sectorial Surge:</strong> หุ้นกลุ่มรับเหมา (STEC) นำตลาดด้วยการดีดตัวขึ้นแรงกว่า 18.8%</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: Strategy Conclusion -->
+        <section id="slide-5">
+            <div class="max-w-4xl w-full space-y-16 text-center">
+                <div class="space-y-4">
+                    <h2 class="text-4xl font-bold text-slate-900">Strategic Conclusion</h2>
+                    <p class="text-slate-400 text-lg font-light italic">"Legitimacy & Clarity" คือหัวใจสำคัญของการฟื้นตัวของตลาดหุ้นไทย</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                    <div class="p-10 card bg-slate-50 border-none group transition hover:bg-white hover:shadow-2xl">
+                        <h4 class="text-xl font-bold text-slate-900 mb-4">Clarity Over Regime</h4>
+                        <p class="text-slate-500 leading-relaxed font-light text-sm">
+                            ตลาดขานรับ "ความชัดเจน" ของผลลัพธ์มากกว่าระบอบ หากรัฐบาลมีความชอบธรรมและทีมเศรษฐกิจที่แข็งแกร่ง (อานันท์, อภิสิทธิ์) ตลาดจะให้พรีเมียมบวกเสมอ
+                        </p>
+                    </div>
+                    <div class="p-10 card bg-slate-50 border-none group transition hover:bg-white hover:shadow-2xl">
+                        <h4 class="text-xl font-bold text-slate-900 mb-4">Quality of Tenure</h4>
+                        <p class="text-slate-500 leading-relaxed font-light text-sm">
+                            อยู่นานไม่ได้แปลว่าดีเสมอไป หากขาดการปฏิรูปโครงสร้างเศรษฐกิจ (ประยุทธ์ 3,284 วัน / +1.3\%) ตลาดให้ความสำคัญกับคุณภาพของนโยบายมากกว่าระยะเวลาที่ดำรงตำแหน่ง
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-12 bg-blue-600 rounded-[3.5rem] text-white shadow-2xl shadow-blue-200">
+                    <p class="text-3xl font-bold italic leading-tight">"ให้น้ำหนักทีมเศรษฐกิจร้อยละ 50 ของการตัดสินใจ <br>และใช้โอกาสจากปรากฏการณ์ Election Rally"</p>
+                </div>
+
+                <div class="pt-8">
+                    <a href="https://bblasset.sharepoint.com/:b:/s/EconUpdate_Research/IQA8a-5OoazrQ6guBwfic-RyAaq3HnSs-BCEqxVxq7rxuwk?e=lbAJAn" target="_blank" class="btn-pdf">
+                        <span class="text-lg">📄</span>
+                        ดาวน์โหลดรายงานวิเคราะห์ฉบับสมบูรณ์ (PDF)
+                    </a>
+                </div>
+
+                <footer class="pt-10 border-t border-slate-100">
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-[0.4em]">BBLAM Financial Research & Economic Strategy | Data 1992-2026</p>
+                </footer>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        const COLORS = {
+            blue:   '#0064FF',
+            red:    '#EF3C67',
+            green:  '#61D09C',
+            purple: '#9E50CC',
+            pink:   '#F47C99',
+            orange: '#FF6600',
+            grid:   '#f1f5f9'
+        };
+
+        window.onload = () => {
+            initRallyChart();
+            initRegimeChart();
+            initTenureChart();
+            setupIntersectionObserver();
+        };
+
+        // 1. Rally Bar Chart (+1.6% / +1.2%)
+        function initRallyChart() {
+            const ctx = document.getElementById('chartRally').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['ปี 2535', 'ปี 2544', 'ปี 2554', 'ปี 2562', 'ปี 2566', 'ปี 2569 (Actual)'],
+                    datasets: [
+                        {
+                            label: '1 เดือนก่อนเลือกตั้ง (%)',
+                            data: [6.3, 5.2, -1.5, -0.8, -1.2, 8.0],
+                            backgroundColor: COLORS.blue,
+                            borderRadius: 8
+                        },
+                        {
+                            label: '1 เดือนหลังเลือกตั้ง (%)',
+                            data: [8.3, 14.8, 9.4, 1.5, 0.1, 4.5],
+                            backgroundColor: COLORS.purple,
+                            borderRadius: 8
+                        }
+                    ]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { family: 'Prompt', size: 12 } } }
+                    },
+                    scales: {
+                        y: { grid: { color: COLORS.grid }, ticks: { font: { family: 'Prompt' } } },
+                        x: { grid: { display: false }, ticks: { font: { family: 'Prompt' } } }
+                    }
+                }
+            });
+        }
+
+        // 2. Regime Performance Comparison (Top Successions)
+        function initRegimeChart() {
+            const ctx = document.getElementById('chartRegime').getContext('2d');
+            const data = [
+                { l: 'อานันท์ (+122.6%)', v: 122.6, t: 'appt' },
+                { l: 'อภิสิทธิ์ (+42.1%)', v: 42.1, t: 'appt' },
+                { l: 'ทักษิณ 1 (+21.1%)', v: 21.1, t: 'elec' },
+                { l: 'ชวน 1 (+20.5%)', v: 20.5, t: 'elec' },
+                { l: 'ประยุทธ์ 1 (+1.3%)', v: 1.3, t: 'appt' },
+                { l: 'ประยุทธ์ 2 (+1.0%)', v: 1.0, t: 'elec' },
+                { l: 'ชวลิต (-50.7%)', v: -50.7, t: 'elec' },
+                { l: 'สมชาย (-88.2%)', v: -88.2, t: 'appt' }
+            ];
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.map(d => d.l),
+                    datasets: [{
+                        label: 'Annualized Return (%)',
+                        data: data.map(d => d.v),
+                        backgroundColor: data.map(d => d.t === 'elec' ? COLORS.blue : COLORS.purple),
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { grid: { color: COLORS.grid } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        // 3. Tenure Paradox - FULL 18 POINTS from Excel
+        function initTenureChart() {
+            const ctx = document.getElementById('chartTenure').getContext('2d');
+            
+            // ELECTED Points (9 Points)
+            const elected = [
+                { x: 1024, y: 20.5, name: 'ชวน 1' },
+                { x: 1492, y: 21.1, name: 'ทักษิณ 1' },
+                { x: 557, y: -0.8, name: 'ทักษิณ 2' },
+                { x: 1006, y: 9.5, name: 'ยิ่งลักษณ์' },
+                { x: 349, y: -50.7, name: 'ชวลิต' },
+                { x: 501, y: -25.7, name: 'บรรหาร' },
+                { x: 1535, y: 1.0, name: 'ประยุทธ์ 2' },
+                { x: 358, y: -13.9, name: 'เศรษฐา' },
+                { x: 224, y: -18.9, name: 'สมัคร' }
+            ];
+
+            // APPOINTED/OTHER Points (9 Points)
+            const appointed = [
+                { x: 104, y: 122.6, name: 'อานันท์' },
+                { x: 157, y: 8.0, name: 'อนุทิน (2569 Rally)' },
+                { x: 75, y: -88.2, name: 'สมชาย' },
+                { x: 319, y: -12.9, name: 'แพทองธาร' },
+                { x: 1187, y: -11.8, name: 'ชวน 2' },
+                { x: 960, y: 42.1, name: 'อภิสิทธิ์' },
+                { x: 48, y: -68.1, name: 'สุจินดา' },
+                { x: 484, y: 6.3, name: 'สุรยุทธ์' },
+                { x: 1749, y: 1.3, name: 'ประยุทธ์ 1' }
+            ];
+
+            new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            label: 'เลือกตั้ง (Elected) - 9 ท่าน',
+                            data: elected,
+                            backgroundColor: COLORS.blue,
+                            pointRadius: 11,
+                            pointHoverRadius: 16,
+                            borderColor: '#fff',
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'แต่งตั้ง (Appointed) - 9 ท่าน',
+                            data: appointed,
+                            backgroundColor: COLORS.purple,
+                            pointRadius: 11,
+                            pointHoverRadius: 16,
+                            borderColor: '#fff',
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { font: { family: 'Prompt', size: 12 } } },
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => `${ctx.raw.name}: วาระ ${ctx.raw.x} วัน, Return ${ctx.raw.y}%`
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { 
+                            title: { display: true, text: 'จำนวนวันที่อยู่ในตำแหน่ง (Days)', font: { family: 'Prompt', weight: 'bold' } },
+                            grid: { color: COLORS.grid }
+                        },
+                        y: { 
+                            title: { display: true, text: 'Annualized Return (%)', font: { family: 'Prompt', weight: 'bold' } },
+                            grid: { color: COLORS.grid }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Dot Navigation Setup
+        function setupIntersectionObserver() {
+            const dots = document.querySelectorAll('.dot');
+            const sections = document.querySelectorAll('section');
+
+            const options = { threshold: 0.4 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id.split('-')[1];
+                        dots.forEach(dot => {
+                            dot.classList.remove('active');
+                            if (dot.getAttribute('data-slide') === id) dot.classList.add('active');
+                        });
+                    }
+                });
+            }, options);
+
+            sections.forEach(section => observer.observe(section));
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const targetId = `slide-${dot.getAttribute('data-slide')}`;
+                    document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+        }
+    </script>
 </body>
 </html>
